@@ -17,10 +17,9 @@
     --accent: var(--terracotta);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Using the accent color for navbar brand with bootstrap */
+nav {
+    background-color: #e49a56;
 }
 
 body {
@@ -45,7 +44,7 @@ body {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Soft buttons */
+/* Soft buttons, ws3schools help */
 button, .btn {
     background: var(--primary);
     color: white;
@@ -58,7 +57,7 @@ button, .btn {
 }
 
 button:hover {
-    background: #96A48E;
+    background: #e49a56;
     transform: scale(1.02);
 }
 
@@ -84,11 +83,24 @@ input:focus, textarea:focus {
     padding: 3rem 2rem;
 }
 
-/* Soft header */
-header {
-    background: linear-gradient(135deg, var(--sage) 0%, #8FA482 100%);
-    color: white;
-    padding: 2rem 0;
-    border-radius: 0 0 24px 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+/* The Header */
+h1, h2, .header {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700; /* Bold */;
+    letter-spacing: 1px;
+}
+
+/* The Footer */
+footer {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300; /* Light and clean */
+    font-size: 0.9rem;
+    padding-left: 2rem;
+}
+
+img {
+    display: block;
+    margin: auto;
+    width: 50%;
+    padding: 50px;
 }

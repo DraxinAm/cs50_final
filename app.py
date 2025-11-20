@@ -3,12 +3,13 @@ import os
 from flask import Flask, flash, redirect, render_template, request, session
 # Bring in the Database class from database module
 from database.database import Database
+from login import login_required, problem
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # Configure application
 app = Flask(__name__)
-
+print("Current", os.getcwd())
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -46,7 +47,7 @@ def create():
         pass
     return render_template("create.html")
 
-app.route("/search", methods=["GET", "POST"])
+@app.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
     """Search for recipes"""
@@ -55,7 +56,7 @@ def search():
         pass
     return render_template("search.html")
 
-app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     """Register a new user"""
     if request.method == "POST":
@@ -63,25 +64,32 @@ def register():
         pass
     return render_template("register.html")
 
-app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log user in"""
+    """Log user in, using the method seen in cs50x/finance"""
     if request.method == "POST":
+        # Log out
+        session.clear()
+        if not request.form.get("username"):
+            return problem("Must provide username, sorry.", 403)
+        elif not request.form.get("password"):
+            return problem("Must provide password, sorry.", 403)
         # Handle login logic here
         pass
-    return render_template("login.html")
+    else:
+        return render_template("login.html")
 
-app.route("/logout")
+@app.route("/logout")
 def logout():
     """Log user out"""
     session.clear()
     return redirect("/login")
 
-app.route("/problem")
+@app.route("/problem")
 def problem_route():
     """Example problem route"""
     return problem("This is an example problem message.", 400)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=True)

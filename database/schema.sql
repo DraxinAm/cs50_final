@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS recipes (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Ingredients (stored as JSON or separate rows)
+-- Ingredients
 CREATE TABLE IF NOT EXISTS ingredients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     recipe_id INTEGER NOT NULL,

@@ -1,0 +1,94 @@
+:root {
+    /* Warm neutrals */
+    --cream: #FFF8F0;
+    --off-white: #FAF9F6;
+    --warm-gray: #E8E4DF;
+    --text-dark: #3D3D3D;
+    
+    /* Accent colors */
+    --sage: #A8B5A0;
+    --terracotta: #D4856A;
+    --honey: #E5A84B;
+    
+    /* Semantic */
+    --background: var(--cream);
+    --card-bg: var(--off-white);
+    --primary: var(--sage);
+    --accent: var(--terracotta);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    background-color: var(--background);
+    color: var(--text-dark);
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+/* Cozy cards */
+.recipe-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Soft buttons */
+button, .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: #96A48E;
+    transform: scale(1.02);
+}
+
+/* Gentle inputs */
+input, textarea, select {
+    background: var(--off-white);
+    border: 2px solid var(--warm-gray);
+    border-radius: 10px;
+    padding: 0.875rem;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Cozy container */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Soft header */
+header {
+    background: linear-gradient(135deg, var(--sage) 0%, #8FA482 100%);
+    color: white;
+    padding: 2rem 0;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}

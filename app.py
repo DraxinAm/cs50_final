@@ -1,8 +1,8 @@
 import os
 
 from flask import Flask, flash, redirect, render_template, request, session
-# Chechk how this row works
-from database import Database
+# Bring in the Database class from database module
+from database.database import Database
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 

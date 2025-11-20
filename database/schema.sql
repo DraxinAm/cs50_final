@@ -1,12 +1,12 @@
 -- Users
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     hash TEXT NOT NULL
 );
 
 -- Recipes
-CREATE TABLE recipes (
+CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     title TEXT NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE recipes (
 );
 
 -- Ingredients (stored as JSON or separate rows)
-CREATE TABLE ingredients (
+CREATE TABLE IF NOT EXISTS ingredients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     recipe_id INTEGER NOT NULL,
     amount TEXT,
@@ -28,7 +28,7 @@ CREATE TABLE ingredients (
 );
 
 -- Steps
-CREATE TABLE steps (
+CREATE TABLE IF NOT EXISTS steps (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     recipe_id INTEGER NOT NULL,
     step_number INTEGER NOT NULL,
@@ -37,12 +37,12 @@ CREATE TABLE steps (
 );
 
 -- Tags
-CREATE TABLE tags (
+CREATE TABLE IF NOT EXISTS tags (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL
 );
 
-CREATE TABLE recipe_tags (
+CREATE TABLE IF NOT EXISTS recipe_tags (
     recipe_id INTEGER,
     tag_id INTEGER,
     PRIMARY KEY (recipe_id, tag_id),
@@ -51,7 +51,7 @@ CREATE TABLE recipe_tags (
 );
 
 -- Saved recipes
-CREATE TABLE saved_recipes (
+CREATE TABLE IF NOT EXISTS saved_recipes (
     user_id INTEGER,
     recipe_id INTEGER,
     saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

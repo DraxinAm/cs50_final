@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS saved_recipes (
 INSERT INTO tags (name) VALUES 
 ('Soup'),
 ('Meat'),
-('Fish')
+('Fish'),
 ('Vegetarian'),
 ('Vegan'),
 ('Sweet'),
-('Savory'),
+('Savory')

@@ -16,7 +16,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = Database("recipes.db")
+db = Database("database/recipes.db")
 
 @app.after_request
 def after_request(response):
@@ -61,8 +61,25 @@ def register():
     """Register a new user"""
     if request.method == "POST":
         # Handle registration logic here
-        pass
-    return render_template("register.html")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+        if password != confirmation:
+            return problem("Sorry, password and confirmation must match")
+        if not username:
+            return problem("Sorry, must give username")
+        if not password:
+            return problem("Sorry, must give password")
+        if not confirmation:
+            return problem("Sorry, must give confirmation for password")
+        password = generate_password_hash(password)
+        try:
+            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, password))
+        except ValueError:
+            return problem("Sorry that username is taken")
+        return render_template("login.html")
+    else:
+        return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -75,7 +92,11 @@ def login():
         elif not request.form.get("password"):
             return problem("Must provide password, sorry.", 403)
         # Handle login logic here
-        pass
+        user = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))[0]
+        if check_password_hash(user["hash"], request.form.get("password")):
+            return problem("Sorry, wrong password")
+        session["user_id"] = user["id"]
+        return redirect("/")
     else:
         return render_template("login.html")
 

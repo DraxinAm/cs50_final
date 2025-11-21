@@ -5,4 +5,57 @@
 {% endblock %}
 
 {% block content %}
+    <form method="post" action="/create">
+        <h2 class="header text-center p-4">Create your own recipes!</h2>
+        <div class="mb-3 text-center">
+            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe title" name="recipe_title" autofocus autocomplete="off">
+            <p></p>
+            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe description" name="recipe_description" autocomplete="off">
+        </div>
+        <div class="row justify-content-center">
+            <table style= "width: 30%">
+                <thead>
+                    <th>Minutes</th>
+                    <th>Servings</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Cooking time" name="time" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Servings" name="servings" autocomplete="off"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Insert a place so they can add tags -->
+        <!-- Use maybe javascript so if they complete a row and press a plus button at the end, they can have a new row-->
+        <div class="row justify-content-center">
+            <table id=ingredients_table style= "width: 70%">
+                <thead>
+                    <th>Amount</th>
+                    <th>Unit</th>
+                    <th>Ingredient name</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Amount" name="amount" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Unit" name="unit" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Ingredient" name="name" autocomplete="off"></td>
+                        <td id="plus_button"><button type="submit">+</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <script>
+        // document.getElementById("plus_button").addEventListener("click", addNewRow);
+        // function addNewRow(){
+        //     var table = document.getElementById("ingredients_table");
+        //     var row = table.insertRow();
+        //     var td1 = row.insertCell(0);
+        //     var td2 = row.insertCell(1);
+        //     var td3 = row.insertCell(2);
+
+        //     td1.innerHTML = '<input type="text"class="form-control mx-auto w-auto input" placeholder="Amount" name="amount" autocomplete="off">'
+        // }
+    </script>
 {% endblock %}

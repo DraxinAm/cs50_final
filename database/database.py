@@ -1,24 +1,3 @@
-# import sqlite3
-# from login import problem
-
-# class Database:
-#     def __init__(self, db_file="database/recipes.db"):
-#         self.db_file = db_file
-
-#     def execute(self, query, params):
-#         self.connection = sqlite3.connect("database/recipes.db")
-#         self.cursor = self.connection.cursor()
-
-#         try:
-#             self.cursor.execute(query, params)
-#             self.connection.commit()
-#         except Exception:
-#             print("Query failed")
-#             self.connection.close()
-        
-#         print("Query successfully called.")
-#         self.connection.close()
-
 import sqlite3
 
 class Database:

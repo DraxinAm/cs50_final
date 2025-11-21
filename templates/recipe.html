@@ -1,9 +1,46 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ recipe }}
+    {{ recipe_name }}
 {% endblock %}
 
 {% block content %}
+    <h2>{{ recipe_title}}</h2>
+    <p>{{ recipe_description }}</p>
+    <table>
+        <thead>
+            <th>Minutes</th>
+            <th>Servings</th>
+        </thead>
+        <tbody>
+            <tr> {{ time }} </tr>
+            <tr> {{ servings }} </tr>
+        </tbody>
+    </table>
+    <ul>
+        {% for tag in tags}
+        <li> {{ tag["name"] }} </li>
+        {% endfor %}
+    </ul>
+    <table>
+        <thead>
+            <th>Amount</th>
+            <th>Unit</th>
+            <th>Name</th>
+        </thead>
+        <tbody>
+            {% for row in ingredients %}
+            <tr>
+                <td> {{ row["amount"]}} </td>
+                <td> {{ row["unit"]}} </td>
+                <td> {{ row["name"]}} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <ol>
+            {% for step in steps %}
+            <li> {{ step["instruction"] }} </li>
+        </ol>
+    </table>
 
 {% endblock %}

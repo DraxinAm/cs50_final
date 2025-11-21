@@ -44,7 +44,15 @@ def create():
     """Create a new recipe"""
     if request.method == "POST":
         # Handle recipe creation logic here
-        pass
+        return redirect("/")
+    else:
+        return render_template("create.html")
+    
+@app.route("/recipe", methods=["GET"])
+@login_required
+def recipe():
+    """Present the recipe"""
+    
     return render_template("create.html")
 
 @app.route("/search", methods=["GET", "POST"])

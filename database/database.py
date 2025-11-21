@@ -25,36 +25,16 @@ class Database:
     def __init__(self, db_file="database/recipes.db"):
         self.db_file = db_file
 
-    def execute(self, query, params=()):
-        # connect to the database
-        self.connection = sqlite3.connect(self.db_file)
-        self.cursor = self.connection.cursor()
-        # return a list of dicts
-        self.connection.row_factory = sqlite3.Row
-        try:
-            # Execute the sql queries with preparation to avoid sql injection
-            self.cursor.execute(query, params)
-            self.connection.commit()
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            self.connection.close()
-        
-        if query.strip().upper().startswith("SELECT"):
-            self.connection = sqlite3.connect(self.db_file)
-            self.cursor = self.connection.cursor()
-            # Fetch all results
-            result = self.cursor.fetchall()
-            print(result)
-            # Close the connection
-            self.connection.close()
-            # Convert sqlite3.Row objects to dictionaries
-            return [dict(row) for row in result]
-        
+    def insert_username_and_password(self, username, password):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, password))
+        connection.commit()
+        connection.close()
+
     def get_user_by_username(self, username):
         connection, cursor = self.connection_and_cursor()
         cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
-        result = cursor.fetchone()
-        result = dict(result)
+        result = dict(cursor.fetchone())
         connection.close()
         return result
     

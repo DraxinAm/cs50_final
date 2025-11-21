@@ -74,7 +74,7 @@ def register():
             return problem("Sorry, must give confirmation for password")
         password = generate_password_hash(password)
         try:
-            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, password))
+            db.insert_username_and_password(username, password)
         except ValueError:
             return problem("Sorry that username is taken")
         return render_template("login.html")
@@ -92,8 +92,10 @@ def login():
         elif not request.form.get("password"):
             return problem("Must provide password, sorry.", 403)
         # Handle login logic here
-        user = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))[0]
-        if check_password_hash(user["hash"], request.form.get("password")):
+        user = db.get_user_by_username(request.form.get("username"))
+        password = request.form.get("password")
+        hash = str(user["hash"])
+        if not check_password_hash(hash, password):
             return problem("Sorry, wrong password")
         session["user_id"] = user["id"]
         return redirect("/")

@@ -8,7 +8,7 @@
     <form method="post" action="/create">
         <h2 class="header text-center p-4">Create your own recipes!</h2>
         <div class="mb-3 text-center">
-            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe title" name="recipe_title" autofocus autocomplete="off">
+            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe title" name="recipe_title" autofocus autocomplete="off" required>
             <p></p>
             <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe description" name="recipe_description" autocomplete="off">
         </div>
@@ -20,14 +20,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Cooking time" name="time" autocomplete="off"></td>
-                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Servings" name="servings" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Cooking time" name="time" autocomplete="off" required></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Servings" name="servings" autocomplete="off" required></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- Insert a place so they can add tags -->
+        <div class="mb-3 text-center">
+            <label class="p-4" for="tags">Add your tags based on the diets</label>
+            <p></p>
+            {% for i in range(3) %}
+            <select name="tags{{i}}" id="tags{{i}}">
+                <option selected="true" disabled="disabled">Choose at least one tag</option>
+                <option value="Soup">Soup</option>
+                <option value="Meat">Meat</option>
+                <option value="Fish">Fish</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Sweet">Sweet</option>
+                <option value="Savory">Savory</option>
+            </select>
+            {% endfor %}
+        </div>
         <!-- Use maybe javascript so if they complete a row and press a plus button at the end, they can have a new row-->
+        <p></p>
         <div class="row justify-content-center">
             <table id=ingredients_table style= "width: 70%">
                 <thead>
@@ -36,26 +53,28 @@
                     <th>Ingredient name</th>
                 </thead>
                 <tbody>
+                    {% for i in range(15) %}
                     <tr>
-                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Amount" name="amount" autocomplete="off"></td>
-                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Unit" name="unit" autocomplete="off"></td>
-                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Ingredient" name="name" autocomplete="off"></td>
-                        <td id="plus_button"><button type="submit">+</button></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Amount" name="amount{{i}}" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Unit" name="unit{{i}}" autocomplete="off"></td>
+                        <td><input type="text"class="form-control mx-auto w-auto input" placeholder="Ingredient" name="name{{i}}" autocomplete="off"></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
+        <p></p>
+        <div class="mb-3 text-center">
+            <label>List the steps to make this recipe!</label>
+            <p></p>
+            {% for i in range(10) %}
+            {{i + 1}}.
+            <input type="text" class="form-control mx-auto w-auto input" placeholder="Step {{i + 1}}" name="step{{i}}" autocomplete="off">
+            <p></p>
+            {% endfor %}
+        </div>
+        <div class="mb-3 text-center">
+            <button type="submit" class="form-control mx-auto w-auto button">Create</button>
+        </div>
     </form>
-    <script>
-        // document.getElementById("plus_button").addEventListener("click", addNewRow);
-        // function addNewRow(){
-        //     var table = document.getElementById("ingredients_table");
-        //     var row = table.insertRow();
-        //     var td1 = row.insertCell(0);
-        //     var td2 = row.insertCell(1);
-        //     var td3 = row.insertCell(2);
-
-        //     td1.innerHTML = '<input type="text"class="form-control mx-auto w-auto input" placeholder="Amount" name="amount" autocomplete="off">'
-        // }
-    </script>
 {% endblock %}

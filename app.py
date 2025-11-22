@@ -43,7 +43,52 @@ def cookbook():
 def create():
     """Create a new recipe"""
     if request.method == "POST":
-        # Handle recipe creation logic here
+        # Handle recipe title, desc logic here
+        recipe_title = request.form.get("recipe_title")
+        if not recipe_title:
+            return problem("Must add title")
+        description = request.form.get("recipe_description")
+        if not description:
+            return problem("Must add description")
+        # Handle cooktime and servings
+        cooktime = request.form.get("time")
+        if not cooktime or int(cooktime) < 0:
+            return problem("Must give integer minutes")
+        servings = request.form.get("servings")
+        if not servings or int(servings) < 0:
+            return problem("Must give whole and positive servings")
+        # Insert into table
+        db.insert_recipes(session["user_id"], recipe_title, description, cooktime, servings)
+        # Handle tags
+        tags = []
+        for i in range(3):
+            if request.form.get(f"tags{i}"):
+                tags.append(request.form.get(f"tags{i}"))
+        # Insert into table
+        db.insert_tags(recipe_title, tags)
+        # Handle ingredients
+        ingredients = []
+        for i in range(15):
+            amount = request.form.get(f"amount{i}")
+            unit = request.form.get(f"unit{i}")
+            name = request.form.get(f"name{i}")
+            if name and amount and unit:
+                ingredient = {
+                    "amount" : amount,
+                    "unit" : unit,
+                    "name" : name
+                }
+                ingredients.append(ingredient)
+        # Insert into table
+        db.insert_ingredients(recipe_title, ingredients)
+        # Handle the steps
+        steps = []
+        for i in range(10):
+            step = request.form.get(f"step{i}")
+            if step:
+                steps.append(step)
+        # Insert into table
+        db.insert_steps(recipe_title, steps)
         return redirect("/")
     else:
         return render_template("create.html")

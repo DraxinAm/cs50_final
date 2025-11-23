@@ -5,4 +5,27 @@
 {% endblock %}
 
 {% block content %}
+<form method="post">
+    <div class="mb-3 text-center">
+        <h2 class="header p-4">What are you hungry for?</h2>
+        <input type="text" id="search" class="form-control mx-auto w-auto input" placeholder="Search for recipe here!" name="search" autofocus autocomplete="off" >
+        <p></p>
+        <button class="form-control mx-auto w-auto button" type="submit">Search</button>
+    </div>
+    <div class="mb-3 text-center">
+        <h2 class="header p-4">Looking for specific diet?</h2>
+        <select name="diet" id="diet">
+            <option selected="true" disabled="disabled">Select the diet you are looking for!</option>
+            <option value="Soup">Soup</option>
+            <option value="Meat">Meat</option>
+            <option value="Fish">Fish</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Sweet">Sweet</option>
+            <option value="Savory">Savory</option>
+        </select>
+        <p></p>
+        <button class="form-control mx-auto w-auto button" type="submit">Search</button>
+    </div>
+</form>
 {% endblock %}

@@ -4,6 +4,13 @@ class Database:
     def __init__(self, db_file="database/recipes.db"):
         self.db_file = db_file
 
+    def search(self, recipe_title):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT id FROM recipes WHERE title = ?", (recipe_title,))
+        recipe_id = cursor.fetchone()[0]
+        cursor.execute("SELECT ")
+        
+
     def insert_recipes(self, user_id, recipe_title, description, cooktime, servings):
         connection, cursor = self.connection_and_cursor()
         cursor.execute("INSERT INTO recipes (user_id, title, description, servings, cook_time) VALUES (?, ?, ?, ?, ?)", (user_id, recipe_title, description, cooktime, servings))

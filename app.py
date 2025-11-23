@@ -106,8 +106,18 @@ def search():
     """Search for recipes"""
     if request.method == "POST":
         # Handle search logic here
-        pass
-    return render_template("search.html")
+        search = request.form.get("search")
+        diet = request.form.get("diet")
+        if request.form.get("search"):
+            # Select from table and return that
+            return render_template("searched.html", search=search)
+        if request.form.get("diet"):
+            # Select from table and return that
+            return render_template("recipe.html")
+        if search and diet:
+            return problem("Sorry, you can only choose one")
+    else:
+        return render_template("search.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

@@ -4,43 +4,66 @@
     {{ recipe_name }}
 {% endblock %}
 
+<!--Used Claude.ai to help with the formatting-->
 {% block content %}
-    <h2>{{ recipe_title}}</h2>
-    <p>{{ description }}</p>
-    <table>
-        <thead>
-            <th>Minutes</th>
-            <th>Servings</th>
-        </thead>
-        <tbody>
-            <tr> {{ time }} </tr>
-            <tr> {{ servings }} </tr>
-        </tbody>
-    </table>
-    <ul>
-        {% for tag in tags}
-        <li> {{ tag["name"] }} </li>
-        {% endfor %}
-    </ul>
-    <table>
-        <thead>
-            <th>Amount</th>
-            <th>Unit</th>
-            <th>Name</th>
-        </thead>
-        <tbody>
-            {% for row in ingredients %}
-            <tr>
-                <td> {{ row["amount"]}} </td>
-                <td> {{ row["unit"]}} </td>
-                <td> {{ row["name"]}} </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-        <ol>
-            {% for step in steps %}
-            <li> {{ step["instruction"] }} </li>
-        </ol>
-    </table>
-
+    <div class="container my-5">
+        <h2 class="mb-3 text-center">{{ info["title"] }}</h2>
+        <p class="mb-4 text-muted text-center">{{ info["description"] }}</p>
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <table>
+                    <thead>
+                        <th>Minutes</th>
+                        <th>Servings</th>
+                    </thead>
+                    <tbody>
+                        <td> {{ info["cook_time"] }} </td>
+                        <td> {{ info["servings"] }} </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mb-4 text-center">
+            <h5>Tags</h5>
+            <ul class="list-inline">
+                {% for tag in tags %}
+                <li class="list-inline-item">
+                    <span class="badge bg-secondary">{{ tag["name"] }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8"></div>
+                <h4 class="mb-3">Ingredients</h4>
+                <table>
+                    <thead class="table-light">
+                        <tr>
+                            <th>Amount</th>
+                            <th>Unit</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in ingredients %}
+                        <tr>
+                            <td> {{ row["amount"]}} </td>
+                            <td> {{ row["unit"]}} </td>
+                            <td> {{ row["name"]}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <ol>
+                        {% for step in steps %}
+                        <li class="list-group-item"> {{ step["instruction"] }} </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

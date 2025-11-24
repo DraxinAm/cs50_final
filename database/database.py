@@ -4,11 +4,56 @@ class Database:
     def __init__(self, db_file="database/recipes.db"):
         self.db_file = db_file
 
+    def list_recipe(self, user_id):
+        connection, cursor = self.connection_and_cursor()
+        # Title and description
+        cursor.execute("SELECT id, title, description FROM recipes WHERE user_id = ? ORDER BY created_at DESC ", (user_id,))
+        result = cursor.fetchall()
+        cards = []
+        for i in result:
+            cards.append(dict(i))
+        connection.commit()
+        connection.close()
+        return cards
+        
+    def return_recipe_info(self, recipe_id):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT title, description, servings, cook_time FROM recipes WHERE id = ?", (recipe_id, ))
+        result = cursor.fetchone()
+        info = dict(result)
+        cursor.execute("SELECT name FROM tags WHERE ID IN (SELECT tag_id FROM recipe_tags WHERE recipe_id = ?)", (recipe_id, ))
+        result = cursor.fetchall()
+        tags = []
+        for i in result:
+            tags.append(dict(i)) if result else {}
+        cursor.execute("SELECT amount, unit, name FROM ingredients WHERE recipe_id = ?", (recipe_id, ))
+        result = cursor.fetchall()
+        ingredients = []
+        for i in result:
+            ingredients.append(dict(i)) if result else {}
+        cursor.execute("SELECT instruction FROM steps WHERE recipe_id = ? ORDER BY step_number ASC", (recipe_id, ))
+        result = cursor.fetchall()
+        steps = []
+        for i in result:
+            steps.append(dict(i)) if result else {}
+        connection.commit()
+        connection.close()
+        return info, tags, ingredients, steps 
+    
+
+
     def search(self, recipe_title):
         connection, cursor = self.connection_and_cursor()
-        cursor.execute("SELECT id FROM recipes WHERE title = ?", (recipe_title,))
-        recipe_id = cursor.fetchone()[0]
-        cursor.execute("SELECT ")
+        cursor.execute("SELECT id, title, description FROM recipes WHERE title LIKE ?", (f"%{recipe_title}%",))
+        result = cursor.fetchall()
+        cards = []
+        for i in result:
+            cards.append(dict(i))
+        connection.commit()
+        connection.close()
+        return cards
+        # Search for 
+        #cursor.execute("SELECT ")
         
 
     def insert_recipes(self, user_id, recipe_title, description, cooktime, servings):

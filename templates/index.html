@@ -5,4 +5,22 @@
 {% endblock %}
 
 {% block content %}
+<!--https://getbootstrap.com/docs/5.3/components/card/-->
+<form action=/ method="post">
+    <h2 class="text-center p-4">Choose a recipe!</h2>
+    <div class="row row-cols-1 row-cols-md-5 justify-content-center">
+    {% for i in range(card_number) %}
+    <div class="col-auto">
+        <div class="card p-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ cards[i]["title"] }}</h5>
+                <p class="card-text">{{ cards[i]["description"] }}</p>
+                <a href="/recipe/{{ cards[i]['id']}}" class="btn">Go to details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+  
+</form>
 {% endblock %}

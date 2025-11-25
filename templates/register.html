@@ -6,6 +6,7 @@
 
 {% block content %}
     <form action="/register" method="post">
+        <h2 class="header text-center p-4">Register</h2>
         <p></p>
         <div class="mb-3">
             <input autcomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
@@ -16,6 +17,8 @@
         <div class="mb-3">
             <input autocomplete="off" class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirmation" type="password">
         </div>
-        <button class="form-control mx-auto w-auto btn" type="submit">Register</button>
+        <div class="mb-3 text-center">
+            <button class="form-control mx-auto w-auto btn" type="submit">Register</button>
+        </div>
     </form>
 {% endblock %}

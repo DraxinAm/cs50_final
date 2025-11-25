@@ -42,3 +42,5 @@ In the database folder I stored all the files that has to do with the database (
 As opposed to the previous exercises, we could use AI to work on our final project. In this webpage, I mainly utilised it during the styling and formatting, to save my energies for the back-end part of the project, which interests me the most. I also used it occasionally to debug files, when I had no other idea and specifically told it, not to give me the solution, just the reason. Furthermore, I used external sites, but linked them accordingly.
 
 All in all, I am excited about my final project and enthusiastic to work on it some more, once my knowledge and skills have grown!
+
+(PS. One thing I would like to add in the future is a JavaScript empowered button that resides on the create.hmtl page, which if clicked, adds an additional row to the ingredients and steps part of the page, to make it more agile!)

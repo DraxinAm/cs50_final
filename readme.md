@@ -1,6 +1,6 @@
 # RIZZCIPES
-### Video Demo:
-### Description:
+### Video Demo: https://youtu.be/MuSgfMW9DLE
+### Description: A recipe logging website.
 #### The reason behind the project:
 For my final project I decided to strengthen the muscles I grew from the Week 9 Finance exercise, therefore, I wanted to create a webpage that uses multiple languages. Instead of stocks I chose something that is closer to my heart, which is cooking and baking, thus I created a recipe logging site that lets you surf the community recipes.
 

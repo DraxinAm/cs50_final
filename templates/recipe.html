@@ -4,11 +4,20 @@
     {{ recipe_name }}
 {% endblock %}
 
-<!--Used Claude.ai to help with the formatting-->
 {% block content %}
     <div class="container my-5">
+        <!--Used Claude.ai to help with the formatting-->
         <h2 class="mb-3 text-center">{{ info["title"] }}</h2>
         <p class="mb-4 text-muted text-center">{{ info["description"] }}</p>
+        <form method="POST" class="mb-3 text-center mx-auto w-auto button">
+            <button type="submit">
+                {% if is_favourited %}
+                    Unfavourite
+                {% else %}
+                    Favourite
+                {% endif %}
+            </button>
+        </form>
         <div class="row justify-content-center mb-4">
             <div class="col-md-6">
                 <table>
@@ -35,7 +44,7 @@
         </div>
         <div class="row justify-content-center mb-4">
             <div class="col-md-8"></div>
-                <h4 class="mb-3">Ingredients</h4>
+                <h4 class="mb-3 text-center">Ingredients</h4>
                 <table>
                     <thead class="table-light">
                         <tr>
@@ -57,7 +66,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <ol>
+                    <ol class="list-group list-group-numbered">
                         {% for step in steps %}
                         <li class="list-group-item"> {{ step["instruction"] }} </li>
                         {% endfor %}

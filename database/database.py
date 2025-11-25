@@ -40,8 +40,17 @@ class Database:
         connection.close()
         return info, tags, ingredients, steps 
     
-
-
+    def tag_search(self, tag):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT id, title, description FROM recipes WHERE ID = (SELECT recipe_id FROM recipe_tags WHERE tag_id = (SELECT id FROM tags WHERE name = ?))", (tag, ))
+        result = cursor.fetchall()
+        tags = []
+        for i in result:
+            tags.append(dict(i))
+        connection.commit()
+        connection.close()
+        return tags
+    
     def search(self, recipe_title):
         connection, cursor = self.connection_and_cursor()
         cursor.execute("SELECT id, title, description FROM recipes WHERE title LIKE ?", (f"%{recipe_title}%",))
@@ -52,9 +61,17 @@ class Database:
         connection.commit()
         connection.close()
         return cards
-        # Search for 
-        #cursor.execute("SELECT ")
-        
+
+    def cookbook_cards(self, user_id):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT id, title, description FROM recipes WHERE id IN (SELECT recipe_id FROM saved_recipes WHERE user_id = ?)", (user_id, ))
+        result = cursor.fetchall()
+        cards = []
+        for i in result:
+            cards.append(dict(i))
+        connection.commit()
+        connection.close()
+        return cards
 
     def insert_recipes(self, user_id, recipe_title, description, cooktime, servings):
         connection, cursor = self.connection_and_cursor()
@@ -101,6 +118,27 @@ class Database:
         connection.close()
         return result
     
+    def favourite_recipe(self, user_id, recipe_id):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT COUNT(*) FROM saved_recipes WHERE user_id = ? AND recipe_id = ?", (user_id, recipe_id))
+        result = cursor.fetchone()[0] > 0
+        if result:
+            cursor.execute("DELETE FROM saved_recipes WHERE user_id = ? AND recipe_id = ?", (user_id, recipe_id))
+            saved = False
+        else:
+            cursor.execute("INSERT INTO saved_recipes (user_id, recipe_id) VALUES (?, ?)", (user_id, recipe_id))
+            saved = True
+        connection.commit()
+        connection.close()
+        return saved
+    
+    def is_favourite(self, user_id, recipe_id):
+        connection, cursor = self.connection_and_cursor()
+        cursor.execute("SELECT COUNT(*) FROM saved_recipes WHERE user_id = ? AND recipe_id = ?", (user_id, recipe_id))
+        result = cursor.fetchone()[0] > 0
+        connection.close()
+        return result
+
     def connection_and_cursor(self):
         connection = sqlite3.connect(self.db_file)
         connection.row_factory = sqlite3.Row

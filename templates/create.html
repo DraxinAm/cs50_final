@@ -6,12 +6,16 @@
 
 {% block content %}
     <form method="post" action="/create">
+        <!--Title and description-->
         <h2 class="header text-center p-4">Create your own recipes!</h2>
-        <div class="mb-3 text-center">
-            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe title" name="recipe_title" autofocus autocomplete="off" required>
-            <p></p>
-            <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe description" name="recipe_description" autocomplete="off">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <input type="text" class="form-control mx-auto w-auto input" placeholder="Recipe title" name="recipe_title" autofocus autocomplete="off" required>
+                <p></p>
+                <textarea class="form-control" rows="4" placeholder="Recipe description" name="recipe_description" autocomplete="off"></textarea>
+            </div>
         </div>
+        <!--Minutes, servings-->
         <div class="row justify-content-center">
             <table style= "width: 30%">
                 <thead>
@@ -26,7 +30,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- Insert a place so they can add tags -->
+        <!--Tags-->
         <div class="mb-3 text-center">
             <label class="p-4" for="tags">Add your tags based on the diets</label>
             <p></p>
@@ -43,8 +47,8 @@
             </select>
             {% endfor %}
         </div>
-        <!-- Use maybe javascript so if they complete a row and press a plus button at the end, they can have a new row-->
         <p></p>
+        <!--Ingredients-->
         <div class="row justify-content-center">
             <table id=ingredients_table style= "width: 70%">
                 <thead>
@@ -64,17 +68,21 @@
             </table>
         </div>
         <p></p>
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-3 text-center">Instructions</h4>
+                    <div class="list-group">
+                        {% for i in range(10) %}
+                        <div class="list-group-item">
+                            <label class="form-label fw-bold">Step {{i + 1}}</label>
+                            <textarea class="form-control" rows="2" placeholder="Describe step {{i + 1}}..." name="step{{i}}" autocomplete="off"></textarea>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         <div class="mb-3 text-center">
-            <label>List the steps to make this recipe!</label>
-            <p></p>
-            {% for i in range(10) %}
-            {{i + 1}}.
-            <input type="text" class="form-control mx-auto w-auto input" placeholder="Step {{i + 1}}" name="step{{i}}" autocomplete="off">
-            <p></p>
-            {% endfor %}
-        </div>
-        <div class="mb-3 text-center">
-            <button type="submit" class="form-control mx-auto w-auto button">Create</button>
+            <button type="submit" class="form-control mx-auto w-auto btn">Create</button>
         </div>
     </form>
 {% endblock %}

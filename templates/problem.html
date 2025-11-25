@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <!--Do something with this I have no clue-->
-    <img src="https://api.memegen.link/images/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?background=url_for('static', filename='Muffin.jpg')" title="Apology" alt="Apology" class="border img-fluid">
+    <div class="text-center my-5">
+        <h1>{{ top }}</h1>
+        <h2 class="header p-4">{{ bottom }}</h2>
+        <img src="{{ url_for('static', filename='Muffin.jpg') }}" alt="Error" class="border img-fluid mt-4" style="max-width: 500px;">
+    </div>  
 {% endblock %}

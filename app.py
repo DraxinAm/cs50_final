@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, url_for, redirect, render_template, request, session
 # Bring in the Database class from database module
 from database.database import Database
 from login import login_required, problem
@@ -34,17 +34,19 @@ def index():
     return render_template("index.html", cards=cards, card_number=len(cards))
 
 # https://flask.palletsprojects.com/en/stable/quickstart/ (I borrowed the variable rules modul from this link)
-@app.route('/recipe/<int:recipe_id>')
-def show_post(recipe_id):
+@app.route('/recipe/<int:recipe_id>', methods=["GET", "POST"])
+def show_recipes(recipe_id):
+    if request.method == "POST":
+        saved = db.favourite_recipe(session["user_id"], recipe_id)
+        # https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
+        return redirect(url_for('show_recipes', recipe_id=recipe_id))
     # Show the recipe with the given id, the id is an integer
     info, tags, ingredients, steps = db.return_recipe_info(recipe_id)
-    return render_template("recipe.html", info=info, tags=tags, ingredients=ingredients, steps=steps)
+    saved = db.is_favourite(session["user_id"], recipe_id)
+    return render_template("recipe.html", info=info, tags=tags, ingredients=ingredients, steps=steps, is_favourited = saved)
 
-@app.route("/cookbook")
-@login_required
-def cookbook():
-    """Show cookbook page"""
-    return render_template("cookbook.html")
+
+
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required
@@ -109,27 +111,34 @@ def search():
         # Handle search logic here
         search = request.form.get("search")
         diet = request.form.get("diet")
-        print(search)
-        print(diet)
+        if search and diet:
+            return problem("Sorry, you can only choose one")
+        if not search and not diet:
+            return problem("Sorry, must give a title or a diet")
         if request.form.get("search"):
             # Select from table and return that
             recipe_title = request.form.get("search")
-            cards = db.search(recipe_title)
             # Search for recipe_title, desc, time, servings, tags, ingredients, steps
+            cards = db.search(recipe_title)
+            # If no result return sorry
+            if not cards:
+                return problem("Sorry, no results")
             return render_template("index.html", cards=cards, card_number=len(cards))
         if request.form.get("diet"):
             # Select from table and return that
-            return redirect("/list")
-        if search and diet:
-            return problem("Sorry, you can only choose one")
+            tag = request.form.get("diet")
+            diet = db.tag_search(tag)
+            if not diet:
+                return problem("Sorry, no results")
+            return render_template("index.html", cards=diet, card_number=len(diet))
     else:
         return render_template("search.html")
 
-@app.route("/list", methods=["GET", "POST"])
+@app.route("/cookbook")
 @login_required
-def list():
+def cookbook():
     """List the cards for the found recipes"""
-    cards = db.list_recipe(session["user_id"])
+    cards = db.cookbook_cards(session["user_id"])
     return render_template("index.html", cards=cards, card_number=len(cards))
 
 @app.route("/register", methods=["GET", "POST"])
